@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Indicators;
 
 use Livewire\Component;
 use App\Models\Indicator_categorie; // Pastikan model ini sudah ada

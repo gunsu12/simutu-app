@@ -36,7 +36,7 @@
                             <td class="px-4 py-2 border-b">{{ $division->description }}</td>
                             <td class="px-4 py-2 border-b">
                                 <button wire:click="edit({{ $division->id }})" class="text-blue-600 hover:underline mr-2">Edit</button>
-                                <button wire:click="delete({{ $division->id }})" onclick="return confirm('Delete?')" class="text-red-600 hover:underline">Delete</button>
+                                <button onclick="confirmDelete({{ $division->id }})" class="text-red-600 hover:underline">Delete</button>
                             </td>
                         </tr>
                     @endforeach
@@ -45,3 +45,23 @@
         </table>
     </div>
 </div>
+@push('scripts')
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Anda Yakin?',
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Kirim event ke komponen Livewire
+                Livewire.dispatch('deleteConfirmed', { id: id });
+            }
+        })
+    }
+</script>
+@endpush

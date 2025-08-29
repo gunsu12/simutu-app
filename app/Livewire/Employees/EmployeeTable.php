@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Employees;
 
 use Livewire\Component;
 use App\Models\Employee;
@@ -14,7 +14,7 @@ class EmployeeTable extends Component
     public $showForm = false;
     public $selectedEmployeeId;
 
-    protected $listeners = ['employeeSaved' => 'refreshTable', 'formClosed' => 'closeForm'];
+    protected $listeners = ['employeeSaved' => 'refreshTable', 'formClosed' => 'closeForm', 'deleteConfirmed' => 'deleteEmployee'];
 
     public function render()
     {
@@ -40,9 +40,9 @@ class EmployeeTable extends Component
         $this->showForm = true;
     }
 
-    public function deleteEmployee($employeeId)
+    public function deleteEmployee($id)
     {
-        Employee::find($employeeId)->delete();
+        Employee::find($id)->delete();
         session()->flash('message', 'Employee deleted successfully.');
     }
 

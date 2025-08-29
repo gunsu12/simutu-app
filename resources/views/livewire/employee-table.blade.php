@@ -2,7 +2,7 @@
 
     @if ($showForm)
         <div>
-            @livewire('employee-form', ['employeeId' => $selectedEmployeeId])
+            @livewire('employees.employee-form', ['employeeId' => $selectedEmployeeId])
         </div>
     @endif
 
@@ -40,7 +40,7 @@
                         <td class="px-4 py-2 border-b">{{ $employee->position }}</td>
                         <td class="px-4 py-2 border-b">
                             <button wire:click="editEmployee({{ $employee->id }})" class="text-blue-600 hover:underline mr-2">Edit</button>
-                            <button wire:click="deleteEmployee({{ $employee->id }})" onclick="return confirm('Are you sure?')" class="text-red-600 hover:underline">Delete</button>
+                            <button onclick="confirmDelete({{ $employee->id }}, @js($employee->full_name))" class="text-red-600 hover:underline">Delete</button>
                         </td>
                     </tr>
                 @empty
@@ -55,3 +55,24 @@
         {{ $employees->links() }}
     </div>
 </div>
+
+@push('scripts')
+<script>
+    function confirmDelete(id, name) {
+        Swal.fire({
+            title: 'Anda Yakin?',
+            text: "Data pegawai " + name + " yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Kirim event ke komponen Livewire
+                Livewire.dispatch('deleteConfirmed', { id: id });
+            }
+        })
+    }
+</script>
+@endpush

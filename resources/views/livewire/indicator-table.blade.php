@@ -43,7 +43,7 @@
                         <td class="px-4 py-2 border-b">{{ $category->description }}</td>
                         <td class="px-4 py-2 border-b">
                             <button wire:click="edit({{ $category->id }})" class="text-blue-600 hover:underline mr-2">Edit</button>
-                            <button wire:click="delete({{ $category->id }})" onclick="return confirm('Are you sure?')" class="text-red-600 hover:underline">Delete</button>
+                            <button onclick="confirmDelete({{ $category->id }}, @js($category->name))" class="text-red-600 hover:underline">Delete</button>
                         </td>
                     </tr>
                 @empty
@@ -58,3 +58,24 @@
         {{ $categories->links() }}
     </div>
 </div>
+
+@push('scripts')
+<script>
+    function confirmDelete(id, name) {
+        Swal.fire({
+            title: 'Anda Yakin?',
+            text: "Data kategori indikator :  " + name + "yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Kirim event ke komponen Livewire
+                Livewire.dispatch('deleteConfirmed', { id: id });
+            }
+        })
+    }
+</script>
+@endpush

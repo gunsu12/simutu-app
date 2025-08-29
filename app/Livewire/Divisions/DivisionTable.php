@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Divisions;
 
 use Livewire\Component;
 use App\Models\Division;
@@ -9,6 +9,7 @@ class DivisionTable extends Component
 {
     public $divisions, $name, $description, $division_id;
     public $isEdit = false;
+    protected $listeners = ['deleteConfirmed' => 'delete'];
 
     protected $rules = [
         'name' => 'required|string|max:255|unique:divisions,name',
@@ -69,6 +70,7 @@ class DivisionTable extends Component
     public function delete($id)
     {
         Division::findOrFail($id)->delete();
+
         session()->flash('message', 'Division deleted.');
     }
 }

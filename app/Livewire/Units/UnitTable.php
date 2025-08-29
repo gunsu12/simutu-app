@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Units;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -13,6 +13,7 @@ class UnitTable extends Component
     public $name, $description, $division_id, $unit_id;
     public $isEdit = false;
     public $search = '';
+    protected $listeners = ['deleteConfirmed' => 'delete'];
 
     protected $rules = [
         'name' => 'required|string|max:255|unique:units,name',
