@@ -1,0 +1,33 @@
+services:
+  #--- Layanan Aplikasi Laravel (PHP-FPM) ---#
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: simutu_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - laravel
+
+  #--- Layanan Web Server (Nginx) ---#
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: simutu_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80" # Akses aplikasi dari http://localhost:8080
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - laravel
+    depends_on:
+      - app
+
+#--- Jaringan Docker ---#
+networks:
+  laravel:
+    driver: bridge
