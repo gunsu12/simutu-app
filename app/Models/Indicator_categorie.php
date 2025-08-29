@@ -6,21 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Employee extends Model
+class Indicator_categorie extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'full_name',
-        'email',
-        'phone_number',
-        'unit_id',
-        'position',
-        'status',
+        'name',
+        'description',
     ];
-
-    public function unit()
-    {
-        return $this->belongsTo(Unit::class);
-    }
 }

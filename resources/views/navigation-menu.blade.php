@@ -15,12 +15,50 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('divisions.index') }}" :active="request()->routeIs('divisions.*')">
-                        {{ __('Division') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('units.index') }}" :active="request()->routeIs('units.*')">
-                        {{ __('Unit') }}
-                    </x-nav-link>
+
+                    <div class="hidden sm:flex sm:items-center sm:ms-6 sm:-my-px">
+
+                        @php
+                            // Cek apakah ada route di dalam grup 'Master Data' yang sedang aktif
+                            $isMasterDataActive = request()->routeIs(['divisions.*', 'units.*', 'employees.*', 'indicator_categories.*']);
+                        @endphp
+
+                        <x-dropdown align="left" width="48">
+                            <x-slot name="trigger">
+                                <span class="inline-flex rounded-md">
+                                    <button type="button" @class([
+                                        'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out',
+                                        'border-indigo-400 text-gray-900 focus:border-indigo-700' => $isMasterDataActive,
+                                        'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300' => !$isMasterDataActive,
+                                    ])>
+                                        Master Data
+
+                                        <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <x-dropdown-link href="{{ route('divisions.index') }}" :active="request()->routeIs('divisions.*')">
+                                    {{ __('Division') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('units.index') }}" :active="request()->routeIs('units.*')">
+                                    {{ __('Unit') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('employees.index') }}" :active="request()->routeIs('employees.*')">
+                                    {{ __('Pegawai') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('indicator_categories.index') }}" :active="request()->routeIs('indicator_categories.*')">
+                                    {{ __('Kategori') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('indicator_masters.index') }}" :active="request()->routeIs('indicator_masters.*')">
+                                    {{ __('Indikator') }}
+                                </x-dropdown-link>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
                 </div>
             </div>
 

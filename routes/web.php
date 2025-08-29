@@ -28,4 +28,7 @@ Route::middleware([
 
     Route::view('/divisions', 'divisions.index')->name('divisions.index');
     Route::view('/units', 'units.index')->name('units.index');
+    Route::view('/employees', 'employees.index')->name('employees.index');
+    Route::view('/indicator_categories', 'indicator_categories.index')->name('indicator_categories.index');
+    Route::view('/indicator_masters', 'indicator_masters.index')->name('indicator_masters.index');
 });
